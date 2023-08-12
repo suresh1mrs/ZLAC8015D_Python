@@ -4,8 +4,8 @@ import numpy as np
 import logging
 
 # Configure logging settings for pymodbus
-logging.getLogger('pymodbus').setLevel(logging.DEBUG)
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+logging.getLogger('pymodbus').setLevel(logging.WARNING)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.WARNING)
 
 
 class Controller:
