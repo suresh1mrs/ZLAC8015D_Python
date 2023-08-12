@@ -8,7 +8,7 @@ class Controller:
 
 		self._port = port
 
-		self.client = ModbusClient(method='rtu', port=self._port, baudrate=115200, timeout=1)
+		self.client = ModbusClient(method='rtu', port=self._port, baudrate=115200, timeout=10)
 
 		self.client.connect()
 
