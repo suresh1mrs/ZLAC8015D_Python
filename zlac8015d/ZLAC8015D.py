@@ -4,8 +4,8 @@ import numpy as np
 import logging
 
 # Configure logging settings for pymodbus
-logging.getLogger('pymodbus').setLevel(logging.WARNING)
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.WARNING)
+logging.getLogger('pymodbus').setLevel(logging.DEBUG)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
 
 class Controller:
@@ -14,7 +14,7 @@ class Controller:
 
 		self._port = port
 
-		self.client = ModbusClient(method='rtu', port=self._port, baudrate=115200, timeout=10)
+		self.client = ModbusClient(method='rtu', port=self._port, baudrate=115200, timeout=5)
 
 		self.client.connect()
 
