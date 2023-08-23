@@ -1,11 +1,12 @@
 
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
+# from pymodbus.client import ModbusSerialClient as ModbusClient
 import numpy as np
 import logging
 
 # Configure logging settings for pymodbus
-logging.getLogger('pymodbus').setLevel(logging.DEBUG)
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+logging.getLogger('pymodbus').setLevel(logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
 class Controller:
@@ -14,7 +15,7 @@ class Controller:
 
 		self._port = port
 
-		self.client = ModbusClient(method='rtu', port=self._port, baudrate=115200, timeout=5)
+		self.client = ModbusClient(method='rtu', port=self._port, baudrate=115200, timeout=1)
 
 		self.client.connect()
 
@@ -248,7 +249,7 @@ class Controller:
 
 		rpmL, rpmR = self.get_rpm()
 
-		VL = self.rpm_to_linear(rpmL)
+		VL = self.rpm_to_linear(rpmL) 
 		VR = self.rpm_to_linear(-rpmR)
 
 		return VL, VR

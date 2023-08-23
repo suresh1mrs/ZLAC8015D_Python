@@ -9,7 +9,8 @@ setup(
     license='GPLv3',
     packages=['zlac8015d',],
     install_requires = [
-        'pymodbus',
-        'numpy'
+        'pymodbus==2.5.3',
+        'numpy==1.21',
+        # 'setuptools==60.7.0'
     ]
 )

@@ -8,7 +8,7 @@ motors.disable_motor()
 
 motors.set_accel_time(200,200)
 motors.set_decel_time(200,200)
-motors.set_maxRPM_pos(100,100)
+motors.set_maxRPM_pos(20,20)
 
 motors.set_mode(1)
 motors.set_position_async_control()

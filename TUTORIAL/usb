@@ -1,0 +1,3 @@
+ll /sys/class/tty/ttyUSB*
+
+sudo chmod a+rw /dev/ttyUSB0

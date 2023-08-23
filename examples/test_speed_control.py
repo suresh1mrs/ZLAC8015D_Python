@@ -15,7 +15,7 @@ motors.enable_motor()
 # cmds = [140, 170]
 #cmds = [100, 50]
 #cmds = [150, -100]
-cmds = [-50, 30]
+cmds = [150, -150]
 
 motors.set_rpm(cmds[0],cmds[1])
 
@@ -26,10 +26,16 @@ while True:
 	try:
 		# motors.set_rpm(cmds[0],cmds[1])
 		rpmL, rpmR = motors.get_rpm()
-
 		print("period: {:.4f} rpmL: {:.1f} | rpmR: {:.1f}".format(period,rpmL,rpmR))
+
+		l_tick, r_tick = motors.get_wheels_tick()
+		print("period: {:.4f} l_tick: {:.1f} | r_tick: {:.1f}".format(period,l_tick,r_tick))
+
+		vl, vr = motors.get_linear_velocities()
+		print("period: {:.4f} VL: {:.1f} | VR: {:.1f}".format(period,vl, vr))
+
 		period = time.time() - last_time
-		time.sleep(0.01)
+		time.sleep(0.5)
 			
 
 	except KeyboardInterrupt:
