@@ -1,4 +1,5 @@
 
+import traceback
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 # from pymodbus.client import ModbusSerialClient as ModbusClient
 import numpy as np
@@ -79,6 +80,16 @@ class Controller:
 		self.ASYNC = 0
 		self.SYNC = 1
 
+		###################
+		## Driver Health ##
+		###################
+		self.CURR_LEFT = 0x20AD
+		self.CURR_RIGHT = 0x20AE
+
+		self.DRIVER_VOLT = 0x20A1
+
+		self.MOTOR_TEMP = 0x20A4
+
 		#################
 		## Fault codes ##
 		#################
@@ -117,7 +128,7 @@ class Controller:
 					reg[i] = result.registers[i]
 				read_success = True
 			except AttributeError as e:
-				print(e)
+				traceback.print_tb(e.__traceback__)
 				pass
 
 		return reg
@@ -231,7 +242,7 @@ class Controller:
 		right_bytes = self.int16Dec_to_int16Hex(R_rpm)
 
 		result = self.client.write_registers(self.L_CMD_RPM, [left_bytes, right_bytes], unit=self.ID)
-
+		return result
 	def get_rpm(self):
 
 
@@ -348,3 +359,27 @@ class Controller:
 		r_tick = np.int32(((r_pul_hi & 0xFFFF) << 16) | (r_pul_lo & 0xFFFF))
 
 		return l_tick, r_tick
+	
+	def get_motor_current(self):
+		registers = self.modbus_fail_read_handler(self.CURR_LEFT, 2)
+		L_Curr = np.int16(registers[0])/10.0
+		R_Curr = np.int16(registers[1])/10.0
+
+		return L_Curr, R_Curr
+
+	def get_driver_voltage(self):
+		registers = self.modbus_fail_read_handler(self.DRIVER_VOLT, 1)
+
+		voltage = registers[0]/100.0
+
+		return voltage
+	
+	def get_motor_temperature(self):
+		registers = self.modbus_fail_read_handler(self.MOTOR_TEMP, 1)
+
+		Temp= np.int16(registers[0])
+
+		L_Temp = (Temp >> 8) & 0XFF
+		R_Temp= Temp & 0XFF
+
+		return L_Temp, R_Temp
